@@ -21,7 +21,7 @@ class Bitsort
         {
             this.bitArray[i] = this.numToBit(arr[i]);
         }
-        this.sorted();
+        this.sort();
     }
     public Bitsort(int[] arr)
     {
@@ -45,7 +45,7 @@ class Bitsort
         {
             this.bitArray[i] = this.numToBit(arr[i], max);
         }
-        this.sorted();
+        this.sort();
     }
     public static void main(String[] args) 
     {
@@ -56,17 +56,19 @@ class Bitsort
             arr[i] = rand.nextInt(100) - 50;
         }
         Bitsort b = new Bitsort(arr);
-        int[] sArr = b.getIntSorted();
+        int[] sArr = b.sorted(arr);
+        //int[] ssarr = new Bitsort(arr).sorted(arr);
         for(int i = 0; i < arr.length; i++)
         {
             System.out.println(sArr[i] + " : " + b.bitArray[i]);
         }
     }
-    public int[] getIntSorted()
+    
+    public int[] sorted(int [] arr)
     {
         return this.intArray;
     }
-    public float[] getFloatSorted()
+    public float[] sorted(float [] arr)
     {
         return this.floatArray;
     }
@@ -97,21 +99,23 @@ class Bitsort
             return "1" + pad + bitString;
         }
     }
-    private void sorted()
+
+    private void sort()
     {
         int swapPos = 0;
         for(int i = 0; i < bitArray.length; i++)
         {
-            if(bitArray[i].charAt(0) == 1)
+            if(bitArray[i].charAt(0) == '1')
             {
                 swap(i, swapPos);
                 swapPos ++;
             }
         }
-        innerSort(0, swapPos - 1, 1, 1);
-        innerSort(swapPos, this.bitArray.length - 1, 1, 0);
+        innerSort(0, swapPos - 1, 1, '1');
+        innerSort(swapPos, this.bitArray.length - 1, 1, '0');
     }
-    private void innerSort(int start, int end, int bit, int order)
+
+    private void innerSort(int start, int end, int bit, char order)
     {
         int swapPos = start;
         for(int i = start; i <= end; i++)
@@ -139,15 +143,16 @@ class Bitsort
             }
         }
     }
+
     private void swap(int i, int swapPos)
     {
-        if(type == "int")
+        if(type.equals("int"))
         {
             int temp = this.intArray[swapPos];
             this.intArray[swapPos] = this.intArray[i];
             this.intArray[i] = temp;
         }
-        else if(type == "float")
+        else if(type.equals("float"))
         {
             float temp = this.floatArray[swapPos];
             this.floatArray[swapPos] = this.floatArray[i];
