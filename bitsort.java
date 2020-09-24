@@ -1,4 +1,6 @@
 import java.util.Random;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 
 class Bitsort
@@ -50,17 +52,39 @@ class Bitsort
     public static void main(String[] args) 
     {
         Random rand = new Random();
-        int[] arr = new int [10];
+        /*int[] arr = new int [1000000];
         for(int i = 0; i < arr.length; i++)
         {
-            arr[i] = rand.nextInt(100) - 50;
+            arr[i] = rand.nextInt(10000) - 5000;
+        }*/
+        float[] arr = new float [1000000];
+        for(int i = 0; i < arr.length; i++)
+        {
+            arr[i] = (rand.nextFloat() - 0.5f) * (10000000000f);
         }
         Bitsort b = new Bitsort(arr);
-        int[] sArr = b.sorted(arr);
+        long startTime = System.nanoTime();
+        float[] sArr = b.sorted(arr);
+        long endTime = System.nanoTime();
+        long timeElapsed1 = endTime - startTime;
+        System.out.println("Time elapsed bitsort: " + timeElapsed1);
+
+
+        startTime = System.nanoTime();
+        Arrays.sort(arr);
+        endTime = System.nanoTime();
+        long timeElapsed2 = endTime - startTime;
+        System.out.println("Time elapsed java sort: " + timeElapsed2);
+
+
         //int[] ssarr = new Bitsort(arr).sorted(arr);
-        for(int i = 0; i < arr.length; i++)
+        /*for(int i = 0; i < sArr.length; i++)
         {
-            System.out.println(sArr[i] + " : " + b.bitArray[i]);
+            System.out.println(sArr[i] + "      " + arr[i]+ " : " + b.bitArray[i]);
+        }*/
+        if(Arrays.equals(sArr, arr))
+        {
+            System.out.println("true");
         }
     }
     
@@ -74,7 +98,19 @@ class Bitsort
     }
     private String numToBit(float f)
     {
-        return Integer.toBinaryString(Float.floatToIntBits(Float.floatToIntBits(f)));
+
+        String fString = Integer.toBinaryString(Float.floatToIntBits(f));
+        /*if (f < 0.0f)
+        {
+            System.out.println("Is < 0, bitsize: " + temp.length());
+        }*/
+        //floatToIntBits seems to return a 31 bit string for positives
+        // and 32 bit string for negatives
+        if (f >= 0.0f)
+        {
+            fString = "0" + fString;
+        }
+        return fString;
     }
     private String numToBit(int i, int max)
     {
