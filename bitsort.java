@@ -69,15 +69,13 @@ class Bitsort
 
         long startTime = System.nanoTime();
         int[] sArr = new Bitsort(intArr).sorted(intArr);
-
         long timeElapsed1 = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
-        System.out.println("Time elapsed bitsort: " + timeElapsed1 + " ms");
-
-
+        
         startTime = System.nanoTime();
         Arrays.sort(intArr);
-
         long timeElapsed2 = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
+
+        System.out.println("Time elapsed bitsort: " + timeElapsed1 + " ms");
         System.out.println("Time elapsed java sort: " + timeElapsed2 + " ms");
         System.out.println("Delta bitsort vs sort: " + (timeElapsed1 - timeElapsed2) + " ms");
         System.out.println("Ratio bitsort vs sort: ~" + (timeElapsed1 / timeElapsed2) + "x slower");
@@ -88,17 +86,13 @@ class Bitsort
 
         startTime = System.nanoTime();
         float[] sfArr = new Bitsort(floatArr).sorted(floatArr);
-
-
         timeElapsed1 = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
-        System.out.println("Time elapsed bitsort: " + timeElapsed1 + " ms");
-
-
+        
         startTime = System.nanoTime();
         Arrays.sort(floatArr);
-
-
         timeElapsed2 = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
+
+        System.out.println("Time elapsed bitsort: " + timeElapsed1 + " ms");
         System.out.println("Time elapsed java sort: " + timeElapsed2 + " ms");
         System.out.println("Delta bitsort vs sort: " + (timeElapsed1 - timeElapsed2) + " ms");
         System.out.println("Ratio bitsort vs sort: ~" + (timeElapsed1 / timeElapsed2) + "x slower");
